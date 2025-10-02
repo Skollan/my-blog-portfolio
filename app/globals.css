@@ -24,3 +24,9 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+@layer base {
+  :root {
+    --primary: 220 90% 56%;
+    --secondary: 280 60% 50%;
+  }
+}
