@@ -1,23 +1,27 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase-client";
 import { useRouter } from "next/navigation";
 
 export default function AdminPage() {
   const [user, setUser] = useState(null);
   const router = useRouter();
+  const supabase = createClient();
 
+  // Get user info for display purposes only 
+  // (authentication is now handled by server-side middleware)
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
       setUser(user);
     });
-  }, []);
+  }, [supabase.auth]);
 
   // logout
   const handleLogout = async () => {
     await supabase.auth.signOut()
-    router.push("/admin/login")
+    // Force a page refresh to ensure the middleware picks up the sign out
+    window.location.href = "/admin/login"
   }
 
   return (

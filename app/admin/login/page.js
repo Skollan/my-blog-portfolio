@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { supabase } from "@/lib/supabase"
+import { createClient } from "@/lib/supabase-client"
 import { useRouter } from "next/navigation"
 
 export default function LoginPage(){
@@ -10,6 +10,7 @@ export default function LoginPage(){
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
     const router = useRouter()
+    const supabase = createClient()
 
     const handleLogin = async (e) => {
     e.preventDefault()
@@ -25,7 +26,8 @@ export default function LoginPage(){
       setError(error.message)
       setLoading(false)
     } else {
-      router.push("/admin")
+      // Force a page refresh to ensure the middleware picks up the new session
+      window.location.href = "/admin"
     }
   }
 
