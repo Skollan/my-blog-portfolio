@@ -8,9 +8,9 @@ export default function Header() {
           MonBlog
         </Link>
         <ul className="flex gap-6">
-          <li><Link href="/" className="hover:text-gray-600">Accueil</Link></li>
-          <li><Link href="/blog" className="hover:text-gray-600">Blog</Link></li>
-          <li><Link href="/about" className="hover:text-gray-600">À propos</Link></li>
+          <li><Link href="/" className="hover:text-gray-600 hover:underline">Accueil</Link></li>
+          <li><Link href="/blog" className="hover:text-gray-600 hover:underline">Blog</Link></li>
+          <li><Link href="/about" className="hover:text-gray-600 hover:underline">À propos</Link></li>
         </ul>
       </nav>
     </header>
