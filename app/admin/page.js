@@ -1,27 +1,23 @@
-"use client";
+"use client"
 
-import { useEffect, useState } from "react";
-import { createClient } from "@/lib/supabase-client";
-import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react"
+import { supabase } from "@/lib/supabase"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
 
 export default function AdminPage() {
-  const [user, setUser] = useState(null);
-  const router = useRouter();
-  const supabase = createClient();
+  const [user, setUser] = useState(null)
+  const router = useRouter()
 
-  // Get user info for display purposes only 
-  // (authentication is now handled by server-side middleware)
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
-      setUser(user);
-    });
-  }, [supabase.auth]);
+      setUser(user)
+    })
+  }, [])
 
-  // logout
   const handleLogout = async () => {
     await supabase.auth.signOut()
-    // Force a page refresh to ensure the middleware picks up the sign out
-    window.location.href = "/admin/login"
+    router.push("/admin/login")
   }
 
   return (
@@ -37,15 +33,20 @@ export default function AdminPage() {
       </div>
 
       {user && (
-        <div className="bg-gray-50 p-4 rounded">
-          <p>Connecté en tant que: <strong>{user.email}</strong></p>
+        <div className="bg-gray-50 p-4 rounded mb-8">
+          <p>Connecté: <strong>{user.email}</strong></p>
         </div>
       )}
 
-      <div className="mt-8">
-        <p className="text-gray-600">Interface de gestion des articles arrive bientôt...</p>
+      <div className="grid gap-4">
+        <Link
+          href="/admin/posts"
+          className="p-6 border rounded-lg hover:shadow-lg transition"
+        >
+          <h2 className="text-xl font-semibold mb-2">Articles</h2>
+          <p className="text-gray-600">Gérer les articles du blog</p>
+        </Link>
       </div>
     </div>
   )
-
 }
