@@ -62,7 +62,7 @@ export default function PostsList() {
             
             <div className="flex gap-2">
               <Link
-                href={`/admin/posts/edit/${post.id}`}
+                href={`/admin/posts/${post.id}`}
                 className="px-3 py-1 border rounded hover:bg-gray-50"
               >
                 Éditer
