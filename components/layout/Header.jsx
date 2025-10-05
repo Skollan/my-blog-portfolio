@@ -1,57 +1,71 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { usePathname } from "next/navigation"
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import ThemeToggle from "../ThemeToggle";
 
 export default function Header() {
-  const pathname = usePathname()
-  
+  const pathname = usePathname();
+
   const isActive = (path) => {
-    if (path === "/") return pathname === "/"
-    return pathname.startsWith(path)
-  }
+    if (path === "/") return pathname === "/";
+    return pathname.startsWith(path);
+  };
 
   return (
-    <header className="border-b">
+    <header className="border-b dark:border-gray-700 dark:bg-gray-900 dark:text-white">
       <nav className="container mx-auto px-4 py-4 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold">
           MonBlog
         </Link>
         <ul className="flex gap-6">
           <li>
-            <Link 
-              href="/" 
-              className={`hover:text-gray-600 hover:underline ${isActive("/") ? "font-semibold" : ""}`}
+            <Link
+              href="/"
+              className={`hover:text-gray-600 hover:underline ${
+                isActive("/") ? "font-semibold" : ""
+              }`}
             >
               Accueil
             </Link>
           </li>
           <li>
-            <Link 
-              href="/blog" 
-              className={`hover:text-gray-600 hover:underline ${isActive("/blog") ? "font-semibold" : ""}`}
+            <Link
+              href="/blog"
+              className={`hover:text-gray-600 hover:underline ${
+                isActive("/blog") ? "font-semibold" : ""
+              }`}
             >
               Blog
             </Link>
           </li>
           <li>
-            <Link 
-              href="/portfolio" 
-              className={`hover:text-gray-600 hover:underline ${isActive("/portfolio") ? "font-semibold" : ""}`}
+            <Link
+              href="/portfolio"
+              className={`hover:text-gray-600 hover:underline ${
+                isActive("/portfolio") ? "font-semibold" : ""
+              }`}
             >
               Portfolio
             </Link>
           </li>
           <li>
-            <Link 
-              href="/about" 
-              className={`hover:text-gray-600 hover:underline ${isActive("/about") ? "font-semibold" : ""}`}
+            <Link
+              href="/about"
+              className={`hover:text-gray-600 hover:underline ${
+                isActive("/about") ? "font-semibold" : ""
+              }`}
             >
               À propos
             </Link>
           </li>
         </ul>
+
+        <div className="flex items-center gap-4">
+          <ul className="flex gap-6">{/* ... liens existants ... */}</ul>
+          <ThemeToggle />
+        </div>
       </nav>
     </header>
-  )
+  );
 }
