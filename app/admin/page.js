@@ -1,24 +1,24 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { supabase } from "@/lib/supabase"
-import { useRouter } from "next/navigation"
-import Link from "next/link"
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function AdminPage() {
-  const [user, setUser] = useState(null)
-  const router = useRouter()
+  const [user, setUser] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data: { user } }) => {
-      setUser(user)
-    })
-  }, [])
+      setUser(user);
+    });
+  }, []);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut()
-    router.push("/admin/login")
-  }
+    await supabase.auth.signOut();
+    router.push("/admin/login");
+  };
 
   return (
     <div>
@@ -34,7 +34,9 @@ export default function AdminPage() {
 
       {user && (
         <div className="bg-gray-50 p-4 rounded mb-8">
-          <p>Connecté: <strong>{user.email}</strong></p>
+          <p>
+            Connecté: <strong>{user.email}</strong>
+          </p>
         </div>
       )}
 
@@ -46,7 +48,15 @@ export default function AdminPage() {
           <h2 className="text-xl font-semibold mb-2">Articles</h2>
           <p className="text-gray-600">Gérer les articles du blog</p>
         </Link>
+
+        <Link
+          href="/admin/projects"
+          className="p-6 border rounded-lg hover:shadow-lg transition"
+        >
+          <h2 className="text-xl font-semibold mb-2">Projets</h2>
+          <p className="text-gray-600">Gérer le portfolio</p>
+        </Link>
       </div>
     </div>
-  )
+  );
 }
