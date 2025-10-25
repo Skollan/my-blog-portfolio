@@ -5,6 +5,6 @@ export default function robots() {
       allow: '/',
       disallow: '/admin/',
     },
-    sitemap: 'https://ton-domaine.com/sitemap.xml',
+    sitemap: 'https://my-blog-portfolio-zeta.vercel.app/sitemap.xml',
   }
 }

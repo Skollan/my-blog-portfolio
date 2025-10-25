@@ -16,7 +16,7 @@ export const metadata = {
   openGraph: {
     type: 'website',
     locale: 'fr_FR',
-    url: 'https://ton-domaine.com',
+    url: 'https://my-blog-portfolio-zeta.vercel.app',
     siteName: 'Mon Blog Portfolio',
     images: [
       {
