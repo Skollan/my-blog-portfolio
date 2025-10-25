@@ -59,6 +59,16 @@ export default function Header() {
               À propos
             </Link>
           </li>
+          <li>
+            <Link
+              href="/contact"
+              className={`hover:text-gray-600 hover:underline ${
+                isActive("/contact") ? "font-semibold" : ""
+              }`}
+            >
+              Contact
+            </Link>
+          </li>
         </ul>
 
         <div className="flex items-center gap-4">

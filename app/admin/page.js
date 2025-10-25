@@ -56,6 +56,13 @@ export default function AdminPage() {
           <h2 className="text-xl font-semibold mb-2">Projets</h2>
           <p className="text-gray-600">Gérer le portfolio</p>
         </Link>
+        <Link
+          href="/admin/messages"
+          className="p-6 border rounded-lg hover:shadow-lg transition"
+        >
+          <h2 className="text-xl font-semibold mb-2">Messages</h2>
+          <p className="text-gray-600">Voir les messages de contact</p>
+        </Link>
       </div>
     </div>
   );
