@@ -23,10 +23,6 @@ export default function EditArticle() {
     featured: false
   })
 
-  useEffect(() => {
-    fetchPost()
-  }, [])
-
   const fetchPost = async () => {
     const { data } = await supabase
       .from("posts")
@@ -71,6 +67,10 @@ export default function EditArticle() {
       router.push("/admin/posts")
     }
   }
+
+    useEffect(() => {
+    fetchPost()
+  },)
 
   if (loading) return <p>Chargement...</p>
 

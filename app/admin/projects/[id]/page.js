@@ -23,10 +23,6 @@ export default function EditProject() {
     order_index: 0
   })
 
-  useEffect(() => {
-    fetchProject()
-  }, [])
-
   const fetchProject = async () => {
     const { data } = await supabase
       .from("projects")
@@ -72,6 +68,10 @@ export default function EditProject() {
       router.push("/admin/projects")
     }
   }
+
+    useEffect(() => {
+    fetchProject()
+  },)
 
   if (loading) return <p>Chargement...</p>
 

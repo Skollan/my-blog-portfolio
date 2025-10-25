@@ -1,9 +1,18 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import dynamic from 'next/dynamic'
 import { supabase } from "@/lib/supabase"
-import ProjectCard from "@/components/portfolio/ProjectCard"
-import ProjectModal from "@/components/portfolio/ProjectModal"
+
+// import avec dynamic pour les imports lourds et favoriser le lazyloading
+
+const ProjectCard = dynamic(() => import('@/components/portfolio/ProjectCard'), {
+  loading: () => <div>Chargement...</div>,
+})
+
+const ProjectModal = dynamic(() => import('@/components/portfolio/ProjectModal'), {
+  loading: () => <div>Chargement...</div>,
+})
 
 export default function Portfolio() {
   const [projects, setProjects] = useState([])

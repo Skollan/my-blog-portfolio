@@ -9,7 +9,7 @@ export default function About() {
         </p>
         
         <p>
-          Ce blog me permet de documenter mon parcours d'apprentissage, partager mes découvertes et présenter mes projets. J'utilise principalement React, Next.js et Supabase pour créer des applications web.
+          Ce blog me permet de documenter mon parcours d’&apos;’apprentissage, partager mes découvertes et présenter mes projets. J’&apos;’utilise principalement React, Next.js et Supabase pour créer des applications web.
         </p>
 
         <div className="pt-8">
@@ -29,7 +29,7 @@ export default function About() {
         <div className="pt-8">
           <h2 className="text-2xl font-bold mb-4">Contact</h2>
           <p>
-            N'hésite pas à me contacter si tu veux discuter de projets, collaborer ou simplement échanger sur le développement web.
+            N’&apos;’hésite pas à me contacter si tu veux discuter de projets, collaborer ou simplement échanger sur le développement web.
           </p>
         </div>
       </div>
