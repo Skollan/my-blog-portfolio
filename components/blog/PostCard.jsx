@@ -1,14 +1,7 @@
-import Link from "next/link";
-import Image from "next/image";
+import Link from "next/link"
+import Image from "next/image"
 
 export default function PostCard({ post }) {
-  const { title, slug, excerpt, created_at, cover_image, tags } = post;
-  const date = new Date(created_at).toLocaleDateString("fr-FR", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
   return (
     <article className="border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition">
       {post.cover_image && (
@@ -23,7 +16,7 @@ export default function PostCard({ post }) {
       )}
       
       <div className="p-5">
-        <p className="text-sm text-gray-500 mb-1">
+        <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">
           {new Date(post.created_at).toLocaleDateString("fr-FR")}
         </p>
         
@@ -33,13 +26,18 @@ export default function PostCard({ post }) {
           </Link>
         </h2>
         
-        <p className="text-gray-600 mb-3">{post.excerpt}</p>
+        <p className="text-gray-600 dark:text-gray-300 mb-3">{post.excerpt}</p>
         
         {post.tags && (
           <ul className="flex flex-wrap gap-2">
             {post.tags.map((tag) => (
-              <li key={tag} className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full">
-                #{tag}
+              <li key={tag}>
+                <Link
+                  href={`/blog?tag=${tag}`}
+                  className="text-xs bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 px-2 py-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-700"
+                >
+                  #{tag}
+                </Link>
               </li>
             ))}
           </ul>

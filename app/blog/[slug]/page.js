@@ -64,6 +64,8 @@ export default async function BlogPostPage({ params }) {
         <Image
           src={post.cover_image}
           alt={post.title}
+          width={500}
+          height={200}
           className="w-full rounded-xl mb-6 object-cover max-h-96"
         />
       )}

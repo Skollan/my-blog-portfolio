@@ -63,6 +63,13 @@ export default function AdminPage() {
           <h2 className="text-xl font-semibold mb-2">Messages</h2>
           <p className="text-gray-600">Voir les messages de contact</p>
         </Link>
+        <Link
+          href="/admin/newsletter"
+          className="p-6 border rounded-lg hover:shadow-lg transition"
+        >
+          <h2 className="text-xl font-semibold mb-2">Newsletter</h2>
+          <p className="text-gray-600">Gérer les abonnés</p>
+        </Link>
       </div>
     </div>
   );
