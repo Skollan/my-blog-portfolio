@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server"
-import { Resend } from "resend"
 import { supabase } from "@/lib/supabase"
 import { z } from "zod"
 
@@ -30,22 +29,6 @@ export async function POST(request: NextRequest) {
       .insert([{ name, email, subject, message }])
 
     if (dbError) throw dbError
-
-    if (process.env.NODE_ENV === 'production' && process.env.RESEND_API_KEY) {
-      const resend = new Resend(process.env.RESEND_API_KEY)
-      await resend.emails.send({
-        from: "onboarding@resend.dev",
-        to: "ton-email@gmail.com",
-        subject: subject || "Nouveau message de contact",
-        html: `
-          <h2>Nouveau message de ${name}</h2>
-          <p><strong>Email:</strong> ${email}</p>
-          <p><strong>Sujet:</strong> ${subject || "Aucun"}</p>
-          <p><strong>Message:</strong></p>
-          <p>${message}</p>
-        `,
-      })
-    }
 
     return NextResponse.json({ success: true })
   } catch (error) {
