@@ -1,7 +1,16 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
+import { Post } from "@/lib/supabase"
+import React from "react"
+import { analytics } from "@/lib/analytics"
 
-export default function PostCard({ post }) {
+interface PostCardProps {
+  post: Post
+}
+
+export default function PostCard({ post }: PostCardProps) {
   return (
     <article className="border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition">
       {post.cover_image && (
@@ -21,7 +30,10 @@ export default function PostCard({ post }) {
         </p>
         
         <h2 className="text-xl font-semibold mb-2">
-          <Link href={`/blog/${post.slug}`} className="hover:underline">
+          <Link 
+            href={`/blog/${post.slug}`}
+            onClick={() => analytics.viewPost(post.slug)} 
+            className="hover:underline">
             {post.title}
           </Link>
         </h2>

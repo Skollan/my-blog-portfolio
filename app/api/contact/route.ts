@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 import { Resend } from "resend"
 import { supabase } from "@/lib/supabase"
 import { z } from "zod"
@@ -12,33 +12,27 @@ const contactSchema = z.object({
   message: z.string().min(10, "Le message doit contenir au moins 10 caractères"),
 })
 
-export async function POST(request) {
+export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
 
-    // Validation avec Zod
     const result = contactSchema.safeParse(body)
-    
+
     if (!result.success) {
       return NextResponse.json(
-        { errors: result.error.errors },
+        { errors: result.error.issues },
         { status: 400 }
       )
     }
 
     const { name, email, subject, message } = result.data
 
-    // Sauvegarder dans Supabase
     const { error: dbError } = await supabase
       .from("messages")
       .insert([{ name, email, subject, message }])
 
-    if (dbError) {
-      console.error("Erreur Supabase:", dbError)
-      // Ne pas faire échouer si la table n'existe pas, juste logger l'erreur
-    }
+    if (dbError) throw dbError
 
-    // Envoyer email uniquement en production
     if (process.env.NODE_ENV === 'production') {
       await resend.emails.send({
         from: "onboarding@resend.dev",

@@ -2,23 +2,17 @@ import { supabase } from "@/lib/supabase"
 import PostCard from "@/components/blog/PostCard"
 import FeaturedProjects from "@/components/portfolio/FeaturedProjects"
 import Link from "next/link"
+import React from "react"
+import { getCachedPosts, getCachedProjects } from "@/lib/cache"
 
 export const revalidate = 60
 
 export default async function Home() {
-  const { data: posts } = await supabase
-    .from("posts")
-    .select("*")
-    .eq("published", true)
-    .order("created_at", { ascending: false })
-    .limit(3)
+  const posts = await getCachedPosts(3)
+  const projects = await getCachedProjects()
 
-  const { data: projects } = await supabase
-    .from("projects")
-    .select("*")
-    .eq("featured", true)
-    .order("order_index", { ascending: true })
-    .limit(3)
+  const featuredProjects = projects?.filter(p => p.featured).slice(0, 3)
+
 
   return (
     <div className="space-y-16">

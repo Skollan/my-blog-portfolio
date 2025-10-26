@@ -2,14 +2,29 @@ import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
 import Markdown from "react-markdown";
 import Image from "next/image";
+import React from "react";
 
-export const revalidate = 60; //ISR
+// Ajoute generateStaticParams pour pré-générer les pages
+export async function generateStaticParams() {
+  const { data: posts } = await supabase
+    .from("posts")
+    .select("slug")
+    .eq("published", true)
+    .limit(50) // Top 50 articles
+  
+  return posts?.map((post) => ({
+    slug: post.slug,
+  })) || []
+}
+
+export const revalidate = 3600 // ISR après 1h
 
 export async function generateMetadata({ params }) {
+  const { slug } = await params;
   const { data: post } = await supabase
     .from("posts")
     .select("*")
-    .eq("slug", params.slug)
+    .eq("slug", slug)
     .single();
 
   if (!post) return {};
@@ -73,7 +88,7 @@ export default async function BlogPostPage({ params }) {
       <p className="text-sm text-gray-500">{date}</p>
       <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
 
-      {post.tags?.lenght > 0 && (
+      {post.tags?.length > 0 && (
         <ul className="flex flex-wrap gap-2 mb-6">
           {post.tags.map((tag) => (
             <li

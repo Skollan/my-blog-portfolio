@@ -1,7 +1,14 @@
 import Image from "next/image"
 import Link from "next/link"
+import React from "react"
+import { Project } from "@/lib/supabase"
 
-export default function ProjectCard({ project, onClick }) {
+interface ProjectCardProps {
+  project: Project
+  onClick: (project: Project) => void
+}
+
+export default function ProjectCard({ project, onClick }: ProjectCardProps) {
   return (
     <div 
       onClick={() => onClick(project)}
