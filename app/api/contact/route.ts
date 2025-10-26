@@ -3,8 +3,6 @@ import { Resend } from "resend"
 import { supabase } from "@/lib/supabase"
 import { z } from "zod"
 
-const resend = new Resend(process.env.RESEND_API_KEY)
-
 const contactSchema = z.object({
   name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),
   email: z.string().email("Email invalide"),
@@ -33,7 +31,8 @@ export async function POST(request: NextRequest) {
 
     if (dbError) throw dbError
 
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === 'production' && process.env.RESEND_API_KEY) {
+      const resend = new Resend(process.env.RESEND_API_KEY)
       await resend.emails.send({
         from: "onboarding@resend.dev",
         to: "ton-email@gmail.com",
