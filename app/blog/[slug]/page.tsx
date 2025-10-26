@@ -10,16 +10,22 @@ export async function generateStaticParams() {
     .from("posts")
     .select("slug")
     .eq("published", true)
-    .limit(50) // Top 50 articles
-  
-  return posts?.map((post) => ({
-    slug: post.slug,
-  })) || []
+    .limit(50); // Top 50 articles
+
+  return (
+    posts?.map((post) => ({
+      slug: post.slug,
+    })) || []
+  );
 }
 
-export const revalidate = 3600 // ISR après 1h
+export const revalidate = 3600; // ISR après 1h
 
-export async function generateMetadata({ params }) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
   const { data: post } = await supabase
     .from("posts")
@@ -41,7 +47,11 @@ export async function generateMetadata({ params }) {
   };
 }
 
-export default async function BlogPostPage({ params }) {
+export default async function BlogPostPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
   const { slug } = await params;
 
   const { data: post, error } = await supabase
@@ -69,9 +79,12 @@ export default async function BlogPostPage({ params }) {
     .eq("published", true)
     .order("created_at", { ascending: true });
 
-  const index = adjacent.findIndex((p) => p.slug === slug);
-  const prev = adjacent[index - 1];
-  const next = adjacent[index + 1];
+  const index = adjacent?.findIndex((p) => p.slug === slug) ?? -1;
+  const prev = adjacent && index > 0 ? adjacent[index - 1] : null;
+  const next =
+    adjacent && index >= 0 && index < adjacent.length - 1
+      ? adjacent[index + 1]
+      : null;
 
   return (
     <article className="mx-auto max-w-3xl px-4 py-10 prose prose-gray dark:prose-invert">
@@ -88,7 +101,7 @@ export default async function BlogPostPage({ params }) {
       <p className="text-sm text-gray-500">{date}</p>
       <h1 className="text-4xl font-bold mb-4">{post.title}</h1>
 
-      {post.tags?.length > 0 && (
+      {post.tags && post.tags.length > 0 && (
         <ul className="flex flex-wrap gap-2 mb-6">
           {post.tags.map((tag) => (
             <li
